@@ -1,6 +1,7 @@
 from typing import List, Dict, Any
+from .read_utils import DocReadUtils
 
-class WriteUtils:
+class DocWriteUtils(DocReadUtils):
     """This is created as a Mixin for others to easily add to their classes
     """
     def run_function_against_all_documents(self, fn, docs, field=None):
