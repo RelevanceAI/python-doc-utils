@@ -16,7 +16,7 @@ def get_version(rel_path):
     raise RuntimeError(f"Unable to find a valid __version__ string in {rel_path}.")
 
 setup(
-    name='VecDB',
+    name='document_utils',
     version=get_version("doc_utils/_version.py"),
     url='',
     author='Relevance AI',
