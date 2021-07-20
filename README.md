@@ -6,7 +6,7 @@ Utilies for documents including accessing, writing and bulk editing in Python
 To install this utility, run the following: 
 
 ```
-pip install document-utils==1.0.0
+pip install document-utils
 ```
 
 ### To use
