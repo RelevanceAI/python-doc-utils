@@ -13,6 +13,11 @@ pip install document-utils==1.0.0
 
 ```{python}
 from doc_utils import DocUtils
+
+class Encoder(DocUtils):
+    """Any class instantiation that may want
+    document navigation
+    """
 ```
 
 ### TODO
