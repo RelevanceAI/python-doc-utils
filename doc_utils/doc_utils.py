@@ -1,4 +1,3 @@
-from doc_utils.chunk_doc_utils import ChunkDocUtils
 from .chunk_doc_utils import ChunkDocUtils
 
 class DocUtils(ChunkDocUtils):

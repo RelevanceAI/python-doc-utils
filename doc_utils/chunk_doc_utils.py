@@ -2,7 +2,7 @@
 """
 import itertools
 from typing import Callable
-from doc_utils.write_utils import DocWriteUtils
+from .write_utils import DocWriteUtils
 
 class ChunkDocUtils(DocWriteUtils):
     @classmethod
