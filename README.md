@@ -22,5 +22,4 @@ class Encoder(DocUtils):
 
 ### TODO
 
-- Add support for chunk documents 
 - Enable more versatile functionality for document navigation
