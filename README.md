@@ -67,5 +67,4 @@ Baed on the above function, you can now run it across `field1.field2` as well!
 
 ### TODO
 
-- Add support for chunk documents 
 - Enable more versatile functionality for document navigation
