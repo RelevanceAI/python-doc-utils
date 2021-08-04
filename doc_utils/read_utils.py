@@ -121,3 +121,36 @@ class DocReadUtils:
         Get numerous fields across a document.
         """
         return [self.get_field(f, doc, missing_treatment=missing_treatment) for f in fields]
+    
+    @classmethod
+    def is_field(self, field: str, doc: Dict) -> bool:
+        """
+        For nested dictionaries, tries to access a field.
+        e.g. 
+        field = kfc.item
+        This should return "chickens" based on doc below.
+        {
+            "kfc": {
+                "item": "chickens"
+            }
+        }
+        Args:
+            collection_name:
+                Name of collection.
+            job_id: 
+                ID of the job.
+            job_name:
+                Name of the job.
+        Example:
+            >>> from vectorai.client import ViClient
+            >>> vi_client = ViClient(username, api_key, vectorai_url)
+            >>> sample_document = {'kfc': {'item': 'chicken'}}
+            >>> vi_client.is_field('kfc.item', sample_document) == True
+        """
+        d = doc
+        for f in field.split("."):
+            try:
+                d = d[f]
+            except:
+                return False
+        return True
