@@ -11,7 +11,7 @@ pip install document-utils==1.0.0
 
 ### To use
 
-```{python}
+```python
 from doc_utils import DocUtils
 
 class Encoder(DocUtils):
