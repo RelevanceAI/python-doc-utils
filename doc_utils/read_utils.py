@@ -46,7 +46,10 @@ class DocReadUtils:
             except TypeError:
                 if self._is_string_integer(f):
                     # Get the Get the chunk document out.
-                    d = d[int(f)]
+                    try:
+                        d = d[int(f)]
+                    except IndexError:
+                        pass
                 else:
                     if missing_treatment == 'return_none':
                         return None
