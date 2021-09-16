@@ -17,7 +17,7 @@ def get_version(rel_path):
 
 setup(
     name='document-utils',
-    version=get_version("doc_utils/_version.py"),
+    version=get_version("doc_utils/__init__.py"),
     url='',
     author='Relevance AI',
     author_email='dev@vctr.ai',
