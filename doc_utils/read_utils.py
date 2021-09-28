@@ -124,6 +124,13 @@ class DocReadUtils:
         Get numerous fields across a document.
         """
         return [self.get_field(f, doc, missing_treatment=missing_treatment) for f in fields]
+
+    def get_fields_across_documents(self, fields: List[str], docs: List[Dict], 
+        missing_treatment='return_empty_string'):
+        """Get numerous fields across documents.
+        """
+        return [self.get_fields_across_document(fields, doc, missing_treatment=missing_treatment) \
+            for doc in docs]
     
     @classmethod
     def is_field(self, field: str, doc: Dict) -> bool:
