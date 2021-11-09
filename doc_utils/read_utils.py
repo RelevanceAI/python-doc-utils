@@ -5,7 +5,7 @@ class DocReadUtils:
     """This is created as a Mixin for others to easily add to their classes
     """
     @classmethod
-    def get_field(self, field: str, doc: Dict, missing_treatment: bool='raise_error'):
+    def get_field(self, field: str, doc: Dict, missing_treatment: str ='raise_error'):
         """
             For nested dictionaries, tries to access a field.
             e.g. 
@@ -70,7 +70,7 @@ class DocReadUtils:
 
 
     @classmethod
-    def get_fields(self, fields: List[str], doc: Dict, missing_treatment='return_empty_string') -> List[Any]:
+    def get_fields(self, fields: List[str], doc: Dict, missing_treatment: str = 'return_empty_string') -> List[Any]:
         """
             For nested dictionaries, tries to access a field.
             e.g. 
@@ -119,17 +119,31 @@ class DocReadUtils:
         """
         return [self.get_field(field, doc, missing_treatment) for doc in docs]
     
-    def get_fields_across_document(self, fields: List[str], doc: Dict, missing_treatment='return_empty_string'):
+    def get_fields_across_document(self, fields: List[str], doc: Dict, missing_treatment: str ='return_empty_string'):
         """
         Get numerous fields across a document.
         """
         return [self.get_field(f, doc, missing_treatment=missing_treatment) for f in fields]
 
-    def get_fields_across_documents(self, fields: List[str], docs: List[Dict], 
-        missing_treatment='return_empty_string'):
-        """Get numerous fields across documents.
+
+    def get_fields_across_documents(self, fields: List[str], docs: List[Dict], missing_treatment='return_empty_string'):
+        """Get numerous fields across documents except specified.
         """
         return [self.get_fields_across_document(fields, doc, missing_treatment=missing_treatment) \
+            for doc in docs]
+
+    def get_fields_across_document_except(self, fields: List[str], doc: Dict, missing_treatment: str ='return_empty_string'):
+        """
+        Get numerous fields across a document except specified.
+        """
+        return [self.get_field(doc_field, doc, missing_treatment=missing_treatment) for doc_field in doc.keys() if doc_field not in fields]
+
+
+    def get_fields_across_documents_except(self, fields: List[str], docs: List[Dict], missing_treatment: str ='return_empty_string'):
+        """
+        Get numerous fields across documents except contained.
+        """
+        return [self.get_fields_across_document_except(fields, doc, missing_treatment=missing_treatment) \
             for doc in docs]
     
     @classmethod
