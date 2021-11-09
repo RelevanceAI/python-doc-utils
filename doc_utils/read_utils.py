@@ -127,7 +127,7 @@ class DocReadUtils:
 
 
     def get_fields_across_documents(self, fields: List[str], docs: List[Dict], missing_treatment='return_empty_string'):
-        """Get numerous fields across documents except specified.
+        """Get numerous fields across documents.
         """
         return [self.get_fields_across_document(fields, doc, missing_treatment=missing_treatment) \
             for doc in docs]
@@ -141,7 +141,7 @@ class DocReadUtils:
 
     def get_fields_across_documents_except(self, fields: List[str], docs: List[Dict], missing_treatment: str ='return_empty_string'):
         """
-        Get numerous fields across documents except contained.
+        Get numerous fields across documents except specified.
         """
         return [self.get_fields_across_document_except(fields, doc, missing_treatment=missing_treatment) \
             for doc in docs]
