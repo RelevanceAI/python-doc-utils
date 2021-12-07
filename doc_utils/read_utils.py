@@ -1,3 +1,4 @@
+import pandas as pd
 from typing import Dict, List, Any
 from .errors import MissingFieldError
 
@@ -164,3 +165,14 @@ class DocReadUtils:
             except:
                 return False
         return True
+
+    @classmethod
+    def list_doc_fields(doc:dict):
+        """returns all fields in a document, nested fields are flattened
+        example:
+        input: doc = {'a': {'b':'v', 'c':'v'},
+                      'd':'v'}
+        output: ['d', 'a.b', 'a.c', 'e.f.g']
+        """
+        df = pd.json_normalize(doc, sep='.')
+        return [list(f.keys()) for f in df.to_dict(orient='records')]
