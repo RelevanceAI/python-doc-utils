@@ -166,13 +166,14 @@ class DocReadUtils:
                 return False
         return True
 
-    @classmethod
+    @staticmethod
     def list_doc_fields(doc:dict)-> List[str]:
         """returns all fields in a document, nested fields are flattened
         example:
         input: doc = {'a': {'b':'v', 'c':'v'},
                       'd':'v'}
+                      'e':{'f':{'g':'v'}
         output: ['d', 'a.b', 'a.c', 'e.f.g']
         """
         df = pd.json_normalize(doc, sep='.')
-        return [list(f.keys()) for f in df.to_dict(orient='records')]
+        return list(df.columns)
