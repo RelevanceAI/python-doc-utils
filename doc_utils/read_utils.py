@@ -167,7 +167,7 @@ class DocReadUtils:
         return True
 
     @classmethod
-    def list_doc_fields(doc:dict):
+    def list_doc_fields(doc:dict)-> List[str]:
         """returns all fields in a document, nested fields are flattened
         example:
         input: doc = {'a': {'b':'v', 'c':'v'},
