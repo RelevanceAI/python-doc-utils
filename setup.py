@@ -21,7 +21,7 @@ setup(
     url='',
     author='Relevance AI',
     author_email='dev@vctr.ai',
-    description='No description',
+    description='Document utilities for Python packages.',
     packages=find_packages(),    
-    install_requires=[],
+    install_requires=["pandas"],
 )
