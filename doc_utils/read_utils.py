@@ -111,6 +111,9 @@ class DocReadUtils:
                     List of fields of a document.
                 doc: 
                     document
+                missing_treatment:
+                    This can be one of 'skip', 'return_empty_string'
+
             Example:
                 >>> from vectorai.client import ViClient
                 >>> vi_client = ViClient(username, api_key, vectorai_url)
@@ -118,6 +121,8 @@ class DocReadUtils:
                 >>> vi_client.get_field_across_documents('size.cm', documents)
                 # returns 10 values in the nested dictionary
         """
+        if missing_treatment == "skip":
+            return [self.get_field(field, doc) for doc in docs if self.is_field(field, doc)]
         return [self.get_field(field, doc, missing_treatment) for doc in docs]
     
     def get_fields_across_document(self, fields: List[str], doc: Dict, missing_treatment='return_empty_string'):
