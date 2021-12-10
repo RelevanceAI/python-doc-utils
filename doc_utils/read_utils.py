@@ -122,7 +122,10 @@ class DocReadUtils:
                 # returns 10 values in the nested dictionary
         """
         if missing_treatment == "skip":
-            return [self.get_field(field, doc) for doc in docs if self.is_field(field, doc)]
+            # Returns only the relevant documents
+            def check_field_in_doc(doc):
+                return self.is_field(field, doc)
+            return [self.get_field(field, doc) for doc in filter(check_field_in_doc, docs)]
         return [self.get_field(field, doc, missing_treatment) for doc in docs]
     
     def get_fields_across_document(self, fields: List[str], doc: Dict, missing_treatment='return_empty_string'):
