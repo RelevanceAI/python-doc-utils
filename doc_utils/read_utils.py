@@ -128,7 +128,8 @@ class DocReadUtils:
             return [self.get_field(field, doc) for doc in filter(check_field_in_doc, docs)]
         return [self.get_field(field, doc, missing_treatment) for doc in docs]
     
-    def get_fields_across_document(self, fields: List[str], doc: Dict, missing_treatment='return_empty_string'):
+    def get_fields_across_document(self, fields: List[str], doc: Dict, 
+        missing_treatment='return_empty_string'):
         """
         Get numerous fields across a document.
         """
@@ -137,8 +138,43 @@ class DocReadUtils:
     def get_fields_across_documents(self, fields: List[str], docs: List[Dict], 
         missing_treatment='return_empty_string'):
         """Get numerous fields across documents.
+
+        Example
+        ----------
+
+        For document:
+
+        docs = [
+            {
+            "value": 2,
+            "type": "car"
+            },
+            {
+                "value": 10,
+                "type": "bus"
+            }
+        ]
+
+        >>> DocUtils().get_fields_across_documents(["value", "type"], docs)
+        >>> [2, "car", 10, "bus"]
+
+        Parameters
+        --------------
+
+        missing_treatment: str
+            Can be one of ["skip", "return_empty_string", "return_none", "skip_if_any_missing"]
+            If "skip_if_any_missing", the document will not be included if any field is missing
+
         """
-        return [self.get_fields_across_document(fields, doc, missing_treatment=missing_treatment) \
+        if missing_treatment == "skip_if_any_missing":
+            def is_any_field_missing_in_doc(doc):
+                return all([self.is_field(f, doc) for f in fields])
+            docs = filter(is_any_field_missing_in_doc, docs)
+            return [self.get_field_across_documents(
+                fields, docs
+            )]
+        return [self.get_fields_across_document(
+            fields, doc, missing_treatment=missing_treatment)
             for doc in docs]
     
     @classmethod
