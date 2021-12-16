@@ -170,9 +170,10 @@ class DocReadUtils:
             def is_any_field_missing_in_doc(doc):
                 return all([self.is_field(f, doc) for f in fields])
             docs = filter(is_any_field_missing_in_doc, docs)
-            return [self.get_field_across_documents(
-                fields, docs
-            )]
+
+            return [self.get_fields_across_document(
+                fields, doc
+            ) for doc in docs]
         return [self.get_fields_across_document(
             fields, doc, missing_treatment=missing_treatment)
             for doc in docs]
