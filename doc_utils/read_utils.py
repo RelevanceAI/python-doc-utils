@@ -167,17 +167,22 @@ class DocReadUtils:
 
         """
         if missing_treatment == "skip_if_any_missing":
-            def is_any_field_missing_in_doc(doc):
-                return all([self.is_field(f, doc) for f in fields])
-            docs = filter(is_any_field_missing_in_doc, docs)
-
+            docs = self.filter_docs_for_fields(fields, docs)
             return [self.get_fields_across_document(
                 fields, doc
             ) for doc in docs]
         return [self.get_fields_across_document(
             fields, doc, missing_treatment=missing_treatment)
             for doc in docs]
-    
+
+    def filter_docs_for_fields(self, fields: List, docs: List):
+        """
+        Filter for docs if they contain a list of fields
+        """
+        def is_any_field_missing_in_doc(doc):
+            return all([self.is_field(f, doc) for f in fields])
+        return filter(is_any_field_missing_in_doc, docs)
+        
     @classmethod
     def is_field(self, field: str, doc: Dict) -> bool:
         """
