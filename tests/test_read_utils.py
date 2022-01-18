@@ -22,3 +22,11 @@ def test_get_field_across_documents_for_skip_if_any_missing(sample_document,
         ["value", "check_value"], sample_docs,
         missing_treatment="skip_if_any_missing")
     assert len(new_docs) == 5, "Not skipping"
+
+def test_subset_docs(combined_sample_document):
+    sample_docs = [combined_sample_document] * 100
+    subset_docs = DocUtils().subset_docs(
+        ["value", "check_value"], sample_docs
+    )
+    for subset_doc in subset_docs:
+        assert len(subset_doc) == 2
