@@ -30,3 +30,4 @@ def test_subset_docs(combined_sample_document):
     )
     for subset_doc in subset_docs:
         assert len(subset_doc) == 2
+    assert len(subset_docs) == 100
