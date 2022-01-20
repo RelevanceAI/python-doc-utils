@@ -65,6 +65,14 @@ def add_field_suffix(documents, field):
 
 Based on the above function, you can now run it across `field1.field2` as well!
 
+Additionally, the `get_field` method has options for dealing with missing
+fields through the `missing_treatment` parameter:
+* `"return_empty_string"` returns the empty string `""`
+* `"return_none"` returns the `None`
+* `"replace"` replaces the value of the missing field with the value specified
+  as the argument of the `replacement_value` parameter
+* `"raise_error"` raises the `MissingFieldError`
+
 For convenience subsetting documents, use the `subset_docs` method. 
 This method acts as a quick way to iterate of multiple fields and multiple 
 documents.
