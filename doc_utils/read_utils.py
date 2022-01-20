@@ -1,12 +1,28 @@
 import pandas as pd
-from typing import Dict, List, Any
-from .errors import MissingFieldError
+
+from typing import Any, Dict, FrozenSet, List, Optional, Set, TypeVar
+
+from .errors import InvalidTreatment, MissingFieldError
+from .typing import T
 
 class DocReadUtils:
     """This is created as a Mixin for others to easily add to their classes
     """
+    missing_treatments = frozenset((
+        "return_empty_string",  # return ""
+        "return_none",          # return None
+        "replace",              # replace missing value with specified value
+        "raise_error",          # raises MissingFieldError
+    ))
+
     @classmethod
-    def get_field(self, field: str, doc: Dict, missing_treatment: bool='raise_error'):
+    def get_field(
+        cls, 
+        field: str, 
+        doc: Dict, 
+        missing_treatment: str='raise_error',
+        replacement_value: Optional[T]=None
+    ):
         """
             For nested dictionaries, tries to access a field.
             e.g. 
@@ -38,26 +54,47 @@ class DocReadUtils:
                 try: 
                     return doc[field]
                 except KeyError:
-                    if missing_treatment == 'return_none':
-                        return None
-                    elif missing_treatment == 'return_empty_string':
-                        return ''
-                    raise MissingFieldError("Document is missing " + f + ' of ' + field)
+                    return cls._apply_missing_treatment(
+                        f, field, missing_treatment, replacement_value
+                    )
 
             except TypeError:
-                if self._is_string_integer(f):
+                if cls._is_string_integer(f):
                     # Get the Get the chunk document out.
                     try:
                         d = d[int(f)]
                     except IndexError:
                         pass
                 else:
-                    if missing_treatment == 'return_none':
-                        return None
-                    elif missing_treatment == 'return_empty_string':
-                        return ''
-                    raise MissingFieldError("Document is missing " + f + ' of ' + field)
+                    return cls._apply_missing_treatment(
+                        f, field, missing_treatment, replacement_value
+                    )
+
         return d
+
+    @classmethod
+    def _apply_missing_treatment(
+        cls, 
+        subfield: str,
+        field: str,
+        missing_treatment: str, 
+        replacement_value: Optional[T]
+    ):
+        if not missing_treatment in cls.missing_treatments:
+            raise InvalidTreatment(
+                f"{missing_treatment} is not an invalid treatment"
+            )
+        else:
+            if missing_treatment == "return_empty_string":
+                return ""
+            elif missing_treatment == "return_none":
+                return None
+            elif missing_treatment == "replace":
+                return replacement_value
+            else:
+                raise MissingFieldError(
+                    f"Document is missing {subfield} of {field}"
+                )
 
     @classmethod
     def _is_string_integer(cls, x):
@@ -230,7 +267,7 @@ class DocReadUtils:
 
     @classmethod
     def subset_docs(
-        self, 
+        cls, 
         fields: List[str], 
         docs: List[Dict], 
         missing_treatment: str='return_none'
@@ -267,7 +304,7 @@ class DocReadUtils:
         """
         return [
             {
-                field: self.get_field(
+                field: cls.get_field(
                     field, doc, missing_treatment=missing_treatment
                 ) for field in fields
             } for doc in docs
