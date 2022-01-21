@@ -1,0 +1,29 @@
+{% set name = "document-utils" %}
+{% set data = load_setup_py_data() %}
+
+package:
+  name: "{{ name|lower }}"
+  version: {{ data.get("version") }}
+
+source:
+  path: .
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    {% for req in data.get('install_requires', []) %}
+      - {{ req }}
+    {% endfor %}
+
+about:
+  home: https://relevance.ai
+  license: Apache2.0
+  license_family: Apache
+  summary: Document Utilities
+ 
