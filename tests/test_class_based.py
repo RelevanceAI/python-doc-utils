@@ -1,6 +1,7 @@
 import pytest
 
 from doc_utils import Document
+from doc_utils import DocumentList
 
 
 def test_document(sample_document):
@@ -12,4 +13,8 @@ def test_document(sample_document):
     assert label_val == target_value
 
     document["value"] = 3
-    assert target_value == 3
+    assert document["value"] == 3
+
+
+def test_documents(sample_documents):
+    documents = DocumentList(sample_documents)

@@ -1,3 +1,5 @@
+import pytest
+
 from doc_utils import DocUtils
 
 

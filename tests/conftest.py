@@ -19,4 +19,4 @@ def sample_3_document():
 
 @pytest.fixture
 def sample_documents(sample_document):
-    return sample_document * 100
+    return [sample_document] * 100

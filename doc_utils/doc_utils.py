@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 from .chunk_doc_utils import ChunkDocUtils
 
 
@@ -10,20 +12,27 @@ class DocUtils(ChunkDocUtils):
 
 
 class Document(DocUtils):
-    def __init__(self, document):
+    """
+    A Class for handling json like arrays of dictionaries
+    
+    >>> doc = Document({"value": 3"})
+    >>> doc['value'] # returns 3
+    >>> doc['value'] = 3 # should set the value     
+    """
+    def __init__(self, document: Dict):
         super().__init__()
 
         self.document = document
 
-    def __setitem__(self, key):
+    def __getitem__(self, key: str):
         return self.document[key]
 
-    def __getitem__(self, key, value):
+    def __setitem__(self, key: str, value: str):
         self.document[key] = value
 
 
 class DocumentList(DocUtils):
-    def __init__(self, documents):
+    def __init__(self, documents: List):
         super().__init__()
 
         self.documents = [Document(document) for document in documents]
