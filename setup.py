@@ -1,11 +1,13 @@
 import os
 from setuptools import setup, find_packages
 
+
 def read(rel_path):
     """Read lines from given file"""
     here = os.path.abspath(os.path.dirname(__file__))
     with open(os.path.join(here, rel_path), "r") as fp:
         return fp.read()
+
 
 def get_version(rel_path):
     """Read __version__ from given file"""
@@ -15,13 +17,14 @@ def get_version(rel_path):
             return line.split(delim)[1]
     raise RuntimeError(f"Unable to find a valid __version__ string in {rel_path}.")
 
+
 setup(
-    name='document-utils',
+    name="document-utils",
     version=get_version("doc_utils/__init__.py"),
-    url='',
-    author='Relevance AI',
-    author_email='dev@vctr.ai',
-    description='Document utilities for Python packages.',
-    packages=find_packages(),    
+    url="",
+    author="Relevance AI",
+    author_email="dev@vctr.ai",
+    description="Document utilities for Python packages.",
+    packages=find_packages(),
     install_requires=["pandas"],
 )

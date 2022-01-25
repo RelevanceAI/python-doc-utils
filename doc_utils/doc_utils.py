@@ -14,12 +14,13 @@ class DocUtils(ChunkDocUtils):
 class Document(DocUtils):
     """
     A Class for handling json like arrays of dictionaries
-    
+
     Example:
     >>> doc = Document({"value": 3"})
     >>> doc['value'] # returns 3
-    >>> doc['value'] = 3 # should set the value     
+    >>> doc['value'] = 3 # should set the value
     """
+
     def __init__(self, document: Dict):
         super().__init__()
 
@@ -35,10 +36,11 @@ class Document(DocUtils):
 class DocumentList(DocUtils):
     """
     A Class for handling json like arrays of dictionaries
-    
+
     Example:
     >>> docs = DocumentList([{"value": 2}, {"value": 10}])
     """
+
     def __init__(self, documents: List):
         super().__init__()
 
