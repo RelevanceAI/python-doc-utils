@@ -229,8 +229,8 @@ class DocReadUtils:
         return list(df.columns)
 
     @classmethod
-    def subset_docs(
-        self, 
+    def subset_documents(
+        self,
         fields: List[str], 
         docs: List[Dict], 
         missing_treatment: str='return_none'
@@ -254,7 +254,7 @@ class DocReadUtils:
                 >>> fields = [
                 ...     "kfc.food", "kfc.drink", "mcd.food", "mcd.drink"
                 ... ]
-                >>> vi_client.subset_docs(fields, docs) == [
+                >>> vi_client.subset_documents(fields, docs) == [
                 ...     {
                 ...         "kfc.food": "chicken nuggets", "kfc.drink": "soda"},
                 ...         "mcd.food": "", "mcd.drink": ""
