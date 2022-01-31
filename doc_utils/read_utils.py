@@ -248,6 +248,7 @@ class DocReadUtils:
         return list(df.columns)
 
     @classmethod
+<<<<<<< HEAD
     def subset_docs(
         self,
         fields: List[str],
@@ -283,6 +284,43 @@ class DocReadUtils:
             ...         "mcd.food": "hamburger", "mcd.drink": "pop"},
             ...     }
             ... ]
+=======
+    def subset_documents(
+        self,
+        fields: List[str], 
+        docs: List[Dict], 
+        missing_treatment: str='return_none'
+    ) -> List[Dict]:
+        """
+            Args:
+                fields:
+                    A list of fields of interest.
+                docs:
+                    A list of documents that may or may not have the chosen
+                    fields. 
+                missing_treatment:
+                    Cane be on of return_empty_string/return_none/raise_error
+            Example:
+                >>> from vectorai.client import ViClient
+                >>> vi_client = ViClient(username, api_key, vectorai_url)
+                >>> docs = [
+                ...     {"kfc": {"food": "chicken nuggets", "drink": "soda"}}
+                ...     {"mcd": {"food": "hamburger", "drink": "pop"}}
+                ... ]
+                >>> fields = [
+                ...     "kfc.food", "kfc.drink", "mcd.food", "mcd.drink"
+                ... ]
+                >>> vi_client.subset_documents(fields, docs) == [
+                ...     {
+                ...         "kfc.food": "chicken nuggets", "kfc.drink": "soda"},
+                ...         "mcd.food": "", "mcd.drink": ""
+                ...     },
+                ...     {
+                ...         "kfc.food": "", "kfc.drink": ""},
+                ...         "mcd.food": "hamburger", "mcd.drink": "pop"},
+                ...     }
+                ... ]
+>>>>>>> main
         """
         return [
             {

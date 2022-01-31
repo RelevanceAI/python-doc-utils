@@ -65,7 +65,7 @@ def add_field_suffix(documents, field):
 
 Based on the above function, you can now run it across `field1.field2` as well!
 
-For convenience subsetting documents, use the `subset_docs` method. 
+For convenience subsetting documents, use the `subset_documents` method. 
 This method acts as a quick way to iterate of multiple fields and multiple 
 documents.
 
@@ -77,8 +77,8 @@ docs = [
 ]
 fields = ["doc0.field0"]
 
-subset_docs = DocUtils.subset_docs(fields, docs)
-# subset_docs would be 
+subset_documents = DocUtils.subset_documents(fields, docs)
+# subset_documents would be 
 # [
 #      {"doc0.field0": "value1"},
 #      {"doc0.field0": ""},
