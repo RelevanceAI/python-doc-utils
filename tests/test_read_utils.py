@@ -32,6 +32,7 @@ def test_get_field_across_documents_for_skip_if_any_missing(
     )
     assert len(new_docs) == 5, "Not skipping"
 
+
 def test_subset_documents(combined_sample_document):
     sample_docs = [combined_sample_document] * 100
     subset_documents = DocUtils().subset_documents(
