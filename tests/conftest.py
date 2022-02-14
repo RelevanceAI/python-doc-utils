@@ -4,7 +4,7 @@ import random
 
 @pytest.fixture
 def sample_document():
-    return {"value": random.randint(0, 100)}
+    return {"value": random.randint(0, 100), "value.32": random.randint(0, 100)}
 
 
 @pytest.fixture
