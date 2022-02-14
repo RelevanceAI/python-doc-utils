@@ -235,7 +235,10 @@ class DocReadUtils:
                 try:
                     return doc[field]
                 except KeyError:
-                    return False
+                    try:
+                        d[field]
+                    except KeyError:
+                        return False
             except TypeError:
                 if self._is_string_integer(f):
                     # Get the Get the chunk document out.
