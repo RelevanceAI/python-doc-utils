@@ -11,14 +11,17 @@ Then from the output, use this:
 
 """
 
-import os 
+import os
 from pathlib import Path
 
 # os.system("conda build .")
 
 # from observing the outputs, these seem to be the main file formats
-for fn in list(Path("channel").rglob("*.whl")) +  list(Path("channel").rglob("*tar.gz")) + \
-        list(Path("channel").rglob("*.bz2")):
+for fn in (
+    list(Path("channel").rglob("*.whl"))
+    + list(Path("channel").rglob("*tar.gz"))
+    + list(Path("channel").rglob("*.bz2"))
+):
     print(fn)
     cmd = f"anaconda upload -u relevance {fn}"
     print(cmd)
