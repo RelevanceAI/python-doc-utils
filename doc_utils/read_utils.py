@@ -233,13 +233,15 @@ class DocReadUtils:
                 d = d[f]
             except KeyError:
                 try:
-                    return doc[field]
+                    doc[field]
+                    return True
                 except KeyError:
                     try:
                         d[field]
                     except KeyError:
                         return False
             except TypeError:
+                # To Support integers
                 if self._is_string_integer(f):
                     # Get the Get the chunk document out.
                     try:
