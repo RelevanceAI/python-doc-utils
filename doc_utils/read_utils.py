@@ -7,7 +7,7 @@ class DocReadUtils:
     """This is created as a Mixin for others to easily add to their classes"""
 
     @classmethod
-    def get_field(self, field: str, doc: Dict, missing_treatment: bool = "raise_error"):
+    def get_field(self, field: str, doc: Dict, missing_treatment="raise_error"):
         """
         For nested dictionaries, tries to access a field.
         e.g.

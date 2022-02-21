@@ -37,7 +37,7 @@ class ChunkDocUtils(DocWriteUtils):
         if output_field is None:
             return map(function, chunk_values)
         self.set_field_across_documents(
-            output_field, map(function, chunk_values), chunk_values
+            output_field, list(map(function, chunk_values)), chunk_values
         )
 
     def run_function_across_chunks_across_docs(
@@ -55,4 +55,4 @@ class ChunkDocUtils(DocWriteUtils):
                 function, chunk_field, field, output_field, doc
             )
 
-        return map(self.map_run_function_across_chunks, docs)
+        return map(map_run_function_across_chunks, docs)

@@ -1,0 +1,31 @@
+name: my[py]
+on: [pull_request]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        python-version: [ '3.7', '3.8' ]
+        include:
+          - os: macos-latest
+            path: ~/Library/Caches/pip
+          - os: ubuntu-latest
+            path: ~/.cache/pip
+          - os: 
+            path: ~\AppData\Local\pip\Cache
+        steps:
+          - uses: actions/checkout@v2
+          - name: Install mypy 
+            run: pip install mypy
+          - name: Cache pip
+            uses: actions/cache@v2
+            with:
+              python-version: ${{ matrix.python-version }}
+              path: ${{ matrix.path }}
+              key: ${{ runner.os }}-${{ env.pythonLocation }}-pip-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements-dev.txt') }}
+              restore-keys: |
+                ${{ runner.os }}-${{ env.pythonLocation }}-pip-
+                ${{ runner.os }}-${{ env.pythonLocation }}-
+          - name: Run mypy
+            run: mypy doc_utils
