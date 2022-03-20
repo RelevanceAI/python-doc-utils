@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from typing import Dict, List
 
 from .chunk_doc_utils import ChunkDocUtils
@@ -24,13 +26,31 @@ class Document(DocUtils):
     def __init__(self, document: Dict):
         super().__init__()
 
-        self.document = document
+        for key, value in document.items():
+            if isinstance(value, dict):
+                document[key] = Document(value)
+
+        self.data = deepcopy(document)
+
+    def __repr__(self):
+        return str(self.data)
 
     def __getitem__(self, key: str):
-        return self.document[key]
+        levels = key.split(".")
+
+        value = self.data
+        for level in levels:
+            value = value.__getitem__(level)
+
+        return value
 
     def __setitem__(self, key: str, value: str):
-        self.document[key] = value
+        self.setitem(self, key.split("."), value)
+
+    def setitem(self, obj, keys, value):
+        for key in keys[:-1]:
+            obj = obj.data.setdefault(key, {})
+        obj.data[keys[-1]] = value
 
 
 class DocumentList(DocUtils):
