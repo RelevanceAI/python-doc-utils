@@ -7,7 +7,7 @@ class DocReadUtils:
     """This is created as a Mixin for others to easily add to their classes"""
 
     @classmethod
-    def get_field(self, field: str, doc: Dict, missing_treatment: bool = "raise_error"):
+    def get_field(self, field: str, doc: Dict, missing_treatment="raise_error"):
         """
         For nested dictionaries, tries to access a field.
         e.g.
@@ -231,8 +231,25 @@ class DocReadUtils:
         for f in field.split("."):
             try:
                 d = d[f]
-            except:
-                return False
+            except KeyError:
+                try:
+                    doc[field]
+                    return True
+                except KeyError:
+                    try:
+                        d[field]
+                    except KeyError:
+                        return False
+            except TypeError:
+                # To Support integers
+                if self._is_string_integer(f):
+                    # Get the Get the chunk document out.
+                    try:
+                        d = d[int(f)]
+                    except IndexError:
+                        pass
+                else:
+                    return False
         return True
 
     @staticmethod

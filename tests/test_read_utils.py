@@ -1,12 +1,26 @@
 import pytest
-
 from doc_utils import DocUtils
 
 
 def test_is_field(sample_document):
     assert DocUtils().is_field("fehugieh", sample_document) is False
     key = list(sample_document.keys())[0]
-    assert DocUtils().is_field(key, sample_document) is True
+    assert DocUtils().is_field("value", sample_document) is True
+    assert DocUtils().is_field("blast.32", sample_document) is True
+    assert DocUtils().get_field("blast.32", sample_document) == 21
+
+
+def test_is_field_2(sample_document):
+    assert DocUtils().is_field("blast.32", sample_document) is True
+
+
+@pytest.mark.skip(reason="Hell idk - need to think how to solve this problem")
+def test_get_field(sample_document):
+    assert (
+        DocUtils().get_field("value.32", sample_document) == sample_document["value.32"]
+    )
+    assert DocUtils().get_field("value", sample_document) == sample_document["value"]
+
 
 
 def test_get_field_across_documents(sample_document, sample_2_document):
