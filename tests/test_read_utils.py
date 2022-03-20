@@ -22,7 +22,6 @@ def test_get_field(sample_document):
     assert DocUtils().get_field("value", sample_document) == sample_document["value"]
 
 
-
 def test_get_field_across_documents(sample_document, sample_2_document):
     """Test to ensure you can get field across documents"""
     sample_docs = [sample_document] * 20 + [sample_2_document] * 100

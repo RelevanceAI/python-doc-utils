@@ -7,7 +7,6 @@ def sample_document():
     return {"value": 100, "blast.32": 21}
 
 
-
 @pytest.fixture
 def sample_2_document():
     return {"check_value": random.randint(0, 100)}
