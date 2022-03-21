@@ -30,4 +30,13 @@ def test_nested_document(sample_nested_document):
 
 def test_documents(sample_documents):
     documents = DocumentList(sample_documents)
-    documents = documents.json()
+    assert documents == documents
+
+
+def test_document_json(sample_documents):
+    documents = DocumentList(sample_documents)
+    json_docs = documents.json()
+    assert all(
+        str(sample_document) == str(json_doc)
+        for sample_document, json_doc in zip(sample_documents, json_docs)
+    )

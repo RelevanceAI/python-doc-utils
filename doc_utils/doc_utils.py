@@ -55,7 +55,7 @@ class Document(DocUtils):
     def json(self):
         document = {}
         for key, value in self.data.items():
-            if isinstance(value, object):
+            if isinstance(value, self.__class__):
                 document[key] = value.json()
             else:
                 document[key] = value
