@@ -23,7 +23,7 @@ def test_nested_document(sample_nested_document):
 
     target_value = document["value1.value2.value3"]
     assert label_val == target_value
-    
+
     document["value1.value2.value3"] = 3
     assert document["value1.value2.value3"] == 3
 
