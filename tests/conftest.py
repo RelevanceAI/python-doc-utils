@@ -8,6 +8,11 @@ def sample_document():
 
 
 @pytest.fixture
+def sample_nested_document():
+    return {"value1": {"value2": {"value3": 100}}, "blast.32": 21}
+
+
+@pytest.fixture
 def sample_2_document():
     return {"check_value": random.randint(0, 100)}
 
@@ -26,5 +31,7 @@ def sample_3_document():
 
 
 @pytest.fixture
-def sample_documents(sample_document):
-    return sample_document * 100
+def sample_documents(sample_document, sample_nested_document):
+    documents = [sample_document] * 50 + [sample_nested_document] * 50
+    random.shuffle(documents)
+    return documents
