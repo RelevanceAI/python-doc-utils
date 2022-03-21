@@ -19,11 +19,11 @@ def test_document(sample_document):
 def test_nested_document(sample_nested_document):
     document = Document(sample_nested_document)
 
-    label_val = sample_nested_document["value1"]["value2"]
+    label_val = sample_nested_document["value1"]["value2"]["value3"]
 
-    target_value = document["value1.value2"]
+    target_value = document["value1.value2.value3"]
     assert label_val == target_value
-
+    
     document["value1.value2.value3"] = 3
     assert document["value1.value2.value3"] == 3
 
