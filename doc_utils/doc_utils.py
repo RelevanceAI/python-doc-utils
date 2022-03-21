@@ -52,6 +52,15 @@ class Document(DocUtils):
             obj = obj.data.setdefault(key, {})
         obj.data[keys[-1]] = value
 
+    def json(self):
+        document = {}
+        for key, value in self.data.items():
+            if isinstance(value, object):
+                document[key] = value.json()
+            else:
+                document[key] = value
+        return document
+
 
 class DocumentList(DocUtils):
     """
@@ -68,3 +77,6 @@ class DocumentList(DocUtils):
 
     def __getitem__(self, index):
         return self.documents[index]
+
+    def json(self):
+        return [document.json() for document in self.documents]
