@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from typing import Dict, List
+from typing import Dict, List, Any
 
 from .chunk_doc_utils import ChunkDocUtils
 
@@ -35,7 +35,7 @@ class Document(DocUtils):
     def __repr__(self):
         return str(self.data)
 
-    def __getitem__(self, key: str):
+    def __getitem__(self, key: str) -> Any:
         levels = key.split(".")
 
         value = self.data
@@ -44,10 +44,10 @@ class Document(DocUtils):
 
         return value
 
-    def __setitem__(self, key: str, value: str):
+    def __setitem__(self, key: str, value: Any) -> None:
         self.setitem(self, key.split("."), value)
 
-    def setitem(self, obj, keys, value):
+    def setitem(self, obj, keys: List[str], value: Any) -> None:
         for key in keys[:-1]:
             obj = obj.data.setdefault(key, {})
         obj.data[keys[-1]] = value
