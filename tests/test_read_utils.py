@@ -54,3 +54,9 @@ def test_subset_documents(combined_sample_document):
     for subset_doc in subset_documents:
         assert len(subset_doc) == 2
     assert len(subset_documents) == 100
+
+
+def test_missing_treatment(combined_sample_document):
+    assert -1 == DocUtils().get_field(
+        "anonymous", combined_sample_document, missing_treatment=-1
+    )
