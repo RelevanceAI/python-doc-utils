@@ -43,8 +43,12 @@ class DocReadUtils:
                         return None
                     elif missing_treatment == "return_empty_string":
                         return ""
-                    raise MissingFieldError("Document is missing " + f + " of " + field)
-
+                    elif missing_treatment == "raise_error":
+                        raise MissingFieldError(
+                            "Document is missing " + f + " of " + field
+                        )
+                    else:
+                        return missing_treatment
             except TypeError:
                 if self._is_string_integer(f):
                     # Get the Get the chunk document out.
