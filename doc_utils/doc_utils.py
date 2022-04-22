@@ -1,4 +1,4 @@
-from copy import deepcopy
+from warnings import warn
 
 from collections import MutableSequence
 
@@ -6,7 +6,10 @@ from typing import Dict, List, Any
 
 from .chunk_doc_utils import ChunkDocUtils
 
-from IPython.display import display
+try:
+    from IPython.display import display
+except ModuleNotFoundError:
+    warn("IPython not loaded")
 
 
 class DocUtils(ChunkDocUtils):
