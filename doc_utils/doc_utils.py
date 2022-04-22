@@ -2,6 +2,8 @@ from collections.abc import MutableSequence
 
 from typing import Dict, List, Any
 
+from math import isnan
+
 from .chunk_doc_utils import ChunkDocUtils
 
 try:
@@ -94,9 +96,12 @@ class Document(DocUtils):
             if isinstance(value, self.__class__):
                 document[key] = value.json()
             else:
-                if value is float("nan"):
-                    document[key] = None
-                else:
+                try:
+                    if isnan(value):
+                        document[key] = None
+                    else:
+                        document[key] = value
+                except:
                     document[key] = value
         return document
 
