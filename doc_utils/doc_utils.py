@@ -126,6 +126,13 @@ class Document(DocUtils):
         }
         return items.items()
 
+    def update(self, other: Dict[str, Any]):
+        for key, value in other.items():
+            if isinstance(value, dict):
+                self.data[key] = Document(value)
+            else:
+                self.data[key] = value
+
 
 class DocumentList(DocUtils, MutableSequence):
     """
