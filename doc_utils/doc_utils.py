@@ -1,10 +1,13 @@
-from copy import deepcopy
-
 from collections import MutableSequence
 
 from typing import Dict, List, Any
 
 from .chunk_doc_utils import ChunkDocUtils
+
+try:
+    from IPython.display import display
+except ModuleNotFoundError:
+    pass
 
 
 class DocUtils(ChunkDocUtils):
@@ -33,6 +36,9 @@ class Document(DocUtils):
                 document[key] = Document(value)
 
         self.data = document
+
+    def _ipython_display_(self):
+        display(self.json())
 
     def __repr__(self):
         return str(self.json())
@@ -136,6 +142,9 @@ class DocumentList(DocUtils, MutableSequence):
             Document(document) if not isinstance(document, Document) else document
             for document in documents
         ]
+
+    def _ipython_display_(self):
+        display(self.json())
 
     def __repr__(self):
         return repr([document.json() for document in self.documents])
