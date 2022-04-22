@@ -2,7 +2,7 @@ from collections.abc import MutableSequence
 
 from typing import Dict, List, Any
 
-from math import isnan
+from pandas import isna
 
 from .chunk_doc_utils import ChunkDocUtils
 
@@ -97,7 +97,7 @@ class Document(DocUtils):
                 document[key] = value.json()
             else:
                 try:
-                    if isnan(value):
+                    if isna(value):
                         document[key] = None
                     else:
                         document[key] = value
