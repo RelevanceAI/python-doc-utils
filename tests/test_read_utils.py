@@ -6,12 +6,12 @@ def test_is_field(sample_document):
     assert DocUtils().is_field("fehugieh", sample_document) is False
     key = list(sample_document.keys())[0]
     assert DocUtils().is_field("value", sample_document) is True
-    assert DocUtils().is_field("blast.32", sample_document) is True
-    assert DocUtils().get_field("blast.32", sample_document) == 21
+    assert DocUtils().is_field("blast32", sample_document) is True
+    assert DocUtils().get_field("blast32", sample_document) == 21
 
 
 def test_is_field_2(sample_document):
-    assert DocUtils().is_field("blast.32", sample_document) is True
+    assert DocUtils().is_field("blast32", sample_document) is True
 
 
 @pytest.mark.skip(reason="Hell idk - need to think how to solve this problem")
