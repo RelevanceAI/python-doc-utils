@@ -4,12 +4,12 @@ import random
 
 @pytest.fixture
 def sample_document():
-    return {"value": 100, "blast.32": 21}
+    return {"value": 100, "blast32": 21}
 
 
 @pytest.fixture
 def sample_nested_document():
-    return {"value1": {"value2": {"value3": 100}}, "blast.32": 21}
+    return {"value1": {"value2": {"value3": 100}}, "blast32": 21}
 
 
 @pytest.fixture

@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+from collections import MutableSequence
+
 from typing import Dict, List, Any
 
 from .chunk_doc_utils import ChunkDocUtils
@@ -30,10 +32,35 @@ class Document(DocUtils):
             if isinstance(value, dict):
                 document[key] = Document(value)
 
-        self.data = deepcopy(document)
+        self.data = document
 
     def __repr__(self):
-        return str(self.data)
+        return str(self.json())
+
+    def __len__(self):
+        return len(self.json())
+
+    def __eq__(self, other):
+        try:
+            for key1, key2, value1, value2 in zip(
+                self.keys(),
+                other.keys(),
+                self.values(),
+                other.values(),
+            ):
+                if value1 != value2:
+                    return False
+            return True
+        except:
+            return False
+
+    def __getattr__(self, name):
+        if name.startswith("__"):
+            raise AttributeError
+        if hasattr(self, "data"):
+            if name in self.data:
+                return self.data[name]
+        raise AttributeError
 
     def __getitem__(self, key: str) -> Any:
         levels = key.split(".")
@@ -43,6 +70,9 @@ class Document(DocUtils):
             value = value.__getitem__(level)
 
         return value
+
+    def __iter__(self):
+        return iter(self.keys())
 
     def __setitem__(self, key: str, value: Any) -> None:
         self.setitem(self, key.split("."), value)
@@ -61,8 +91,37 @@ class Document(DocUtils):
                 document[key] = value
         return document
 
+    def keys(self, parent=None):
+        keys = {}
 
-class DocumentList(DocUtils):
+        for key, value in self.data.items():
+            if isinstance(value, self.__class__):
+                if parent is not None:
+                    subparent = f"{parent}.{key}"
+                else:
+                    subparent = key
+                keys.update({key: None for key in value.keys(parent=subparent)})
+                keys.update({subparent: None})
+            else:
+                if parent is None:
+                    keys[key] = None
+                else:
+                    keys[f"{parent}.{key}"] = None
+
+        return keys.keys()
+
+    def values(self):
+        values = {i: self[key] for i, key in enumerate(self.keys())}
+        return values.values()
+
+    def items(self):
+        items = {
+            key: value for key, value in zip(list(self.keys()), list(self.values()))
+        }
+        return items.items()
+
+
+class DocumentList(DocUtils, MutableSequence):
     """
     A Class for handling json like arrays of dictionaries
 
@@ -73,10 +132,41 @@ class DocumentList(DocUtils):
     def __init__(self, documents: List):
         super().__init__()
 
-        self.documents = [Document(document) for document in documents]
+        self.documents = [
+            Document(document) if not isinstance(document, Document) else document
+            for document in documents
+        ]
+
+    def __repr__(self):
+        return [document.json() for document in self.documents]
+
+    def __len__(self):
+        return len(self.documents)
+
+    def __add__(self, other):
+        self.documents += other.documents
+        return self
+
+    def __contains__(self, document):
+        return document in self.documents
 
     def __getitem__(self, index):
         return self.documents[index]
+
+    def __setitem__(self, index, document):
+        if isinstance(document, dict):
+            document = Document(document)
+        assert isinstance(document, Document)
+        self.documents[index] = document
+
+    def __delitem__(self, index):
+        del self.documents[index]
+
+    def insert(self, index, document):
+        if isinstance(document, dict):
+            document = Document(document)
+        assert isinstance(document, Document)
+        self.documents.insert(index, document)
 
     def json(self):
         return [document.json() for document in self.documents]

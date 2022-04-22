@@ -40,3 +40,15 @@ def test_document_json(sample_documents):
         str(sample_document) == str(json_doc)
         for sample_document, json_doc in zip(sample_documents, json_docs)
     )
+
+
+def test_document_methods(sample_nested_document):
+    document = Document(sample_nested_document)
+
+    keys = document.keys()
+    values = document.values()
+    items = document.items()
+
+    assert keys
+    assert values
+    assert items
