@@ -2,6 +2,8 @@ from collections.abc import MutableSequence
 
 from typing import Dict, List, Any
 
+from pandas import isna
+
 from .chunk_doc_utils import ChunkDocUtils
 
 try:
@@ -94,7 +96,13 @@ class Document(DocUtils):
             if isinstance(value, self.__class__):
                 document[key] = value.json()
             else:
-                document[key] = value
+                try:
+                    if isna(value):
+                        document[key] = None
+                    else:
+                        document[key] = value
+                except:
+                    document[key] = value
         return document
 
     def keys(self, parent=None):
