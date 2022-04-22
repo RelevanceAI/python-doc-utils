@@ -94,7 +94,7 @@ class Document(DocUtils):
             if isinstance(value, self.__class__):
                 document[key] = value.json()
             else:
-                if value is float('nan'):
+                if value is float("nan"):
                     document[key] = None
                 else:
                     document[key] = value
