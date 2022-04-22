@@ -1,5 +1,3 @@
-from warnings import warn
-
 from collections import MutableSequence
 
 from typing import Dict, List, Any
