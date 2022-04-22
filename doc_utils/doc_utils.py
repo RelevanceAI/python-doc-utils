@@ -138,7 +138,7 @@ class DocumentList(DocUtils, MutableSequence):
         ]
 
     def __repr__(self):
-        return [document.json() for document in self.documents]
+        return repr([document.json() for document in self.documents])
 
     def __len__(self):
         return len(self.documents)
