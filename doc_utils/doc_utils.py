@@ -6,6 +6,8 @@ from typing import Dict, List, Any
 
 from .chunk_doc_utils import ChunkDocUtils
 
+from IPython.display import display
+
 
 class DocUtils(ChunkDocUtils):
     """Class for all document utilities.
@@ -33,6 +35,9 @@ class Document(DocUtils):
                 document[key] = Document(value)
 
         self.data = document
+
+    def _ipython_display_(self):
+        display(self.json())
 
     def __repr__(self):
         return str(self.json())
@@ -136,6 +141,9 @@ class DocumentList(DocUtils, MutableSequence):
             Document(document) if not isinstance(document, Document) else document
             for document in documents
         ]
+
+    def _ipython_display_(self):
+        display(self.json())
 
     def __repr__(self):
         return repr([document.json() for document in self.documents])
