@@ -9,7 +9,7 @@ from .chunk_doc_utils import ChunkDocUtils
 try:
     from IPython.display import display
 except ModuleNotFoundError:
-    warn("IPython not loaded")
+    pass
 
 
 class DocUtils(ChunkDocUtils):
