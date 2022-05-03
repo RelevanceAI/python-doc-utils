@@ -124,6 +124,12 @@ class Document(DocUtils):
 
         return keys.keys()
 
+    def get(self, key, value=None):
+        try:
+            return self[key]
+        except:
+            return value
+
     def values(self):
         values = {i: self[key] for i, key in enumerate(self.keys())}
         return values.values()
