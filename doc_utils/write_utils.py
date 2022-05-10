@@ -26,7 +26,9 @@ class DocWriteUtils(DocReadUtils):
         [self.set_field(f, doc, values[i]) for i, f in enumerate(fields)]
 
     @staticmethod
-    def set_field(field: str, doc: Dict, value: Any, handle_if_missing=True, inplace=True):
+    def set_field(
+        field: str, doc: Dict, value: Any, handle_if_missing=True, inplace=True
+    ):
         """
         For nested dictionaries, tries to write to the respective field.
         If you toggle off handle_if_misisng, then it will output errors if the field is

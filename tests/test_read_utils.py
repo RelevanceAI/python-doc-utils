@@ -65,7 +65,9 @@ def test_missing_treatment(combined_sample_document):
 def test_inplace(sample_document):
     sample_document = sample_document
 
-    new_sample_document = DocUtils().set_field("blast32", sample_document, 22, inplace=False)
+    new_sample_document = DocUtils().set_field(
+        "blast32", sample_document, 22, inplace=False
+    )
 
     assert sample_document["blast32"] == 21
     assert new_sample_document["blast32"] == 22
