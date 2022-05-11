@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import List, Dict, Any
 from .read_utils import DocReadUtils
 
@@ -25,7 +26,9 @@ class DocWriteUtils(DocReadUtils):
         [self.set_field(f, doc, values[i]) for i, f in enumerate(fields)]
 
     @staticmethod
-    def set_field(field: str, doc: Dict, value: Any, handle_if_missing=True):
+    def set_field(
+        field: str, doc: Dict, value: Any, handle_if_missing=True, inplace=True
+    ):
         """
         For nested dictionaries, tries to write to the respective field.
         If you toggle off handle_if_misisng, then it will output errors if the field is
@@ -52,6 +55,9 @@ class DocWriteUtils(DocReadUtils):
             >>> sample_document = {'kfc': {'item': ''}}
             >>> vi_client.set_field('kfc.item', sample_document, 'chickens')
         """
+        if not inplace:
+            doc = deepcopy(doc)
+
         fields = field.split(".")
         # Assign a pointer.
         d = doc
@@ -65,6 +71,9 @@ class DocWriteUtils(DocReadUtils):
                 else:
                     d.update({f: {}})
                     d = d[f]
+
+        if not inplace:
+            return doc
 
     def set_field_across_documents(
         self, field: str, values: List[Any], docs: List[Dict]
